@@ -1,0 +1,20 @@
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build -t tintuntint/react-test -f Dockerfile.dev ./client
+
+script:
+    - docker run tintuntint/react-test npm test -- --coverage
+
+after_success:
+    - docker run tintuntint/multi-client ./client
+    - docker run tintuntint/multi-nginx ./nginx
+    - docker run tintuntint/multi-server ./server
+    - docker run tintuntint/multi-worker ./worker
+    - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+    - docker push tintuntint/multi-client
+    - docker push tintuntint/multi-nginx
+    - docker push tintuntint/multi-server
+    - docker push tintuntint/multi-worker
