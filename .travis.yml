@@ -13,7 +13,7 @@ after_success:
     - docker build -t tintuntint/multi-nginx ./nginx
     - docker build -t tintuntint/multi-server ./server
     - docker build -t tintuntint/multi-worker ./worker
-    - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     - docker push tintuntint/multi-client
     - docker push tintuntint/multi-nginx
     - docker push tintuntint/multi-server
