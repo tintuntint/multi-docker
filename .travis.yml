@@ -3,16 +3,16 @@ services:
   - docker
 
 before_install:
-  - chmod +x .travis.yml
+  - docker build -t tintuntint/react-test -f ./client/Dockerfile.dev ./client 
 
 script:
-    - docker ps
+    - docker run -e CI=true tintuntint/react-test npm test
 
 after_success:
-    - docker run tintuntint/multi-client ./client
-    - docker run tintuntint/multi-nginx ./nginx
-    - docker run tintuntint/multi-server ./server
-    - docker run tintuntint/multi-worker ./worker
+    - docker build -t tintuntint/multi-client ./client
+    - docker build -t tintuntint/multi-nginx ./nginx
+    - docker build -t tintuntint/multi-server ./server
+    - docker build -t tintuntint/multi-worker ./worker
     - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
     - docker push tintuntint/multi-client
     - docker push tintuntint/multi-nginx

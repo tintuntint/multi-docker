@@ -8,6 +8,12 @@ before_install:
 script:
     - docker run tintuntint/react-test npm test -- --coverage
 
+before_install:
+  - chmod +x .travis.yml
+
+script:
+    - docker ps
+
 after_success:
     - docker run tintuntint/multi-client ./client
     - docker run tintuntint/multi-nginx ./nginx
