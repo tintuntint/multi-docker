@@ -20,6 +20,7 @@ after_success:
     - docker push tintuntint/multi-worker
 
 deploy:
+  edge: true
   provider: elasticbeanstalk
   region: ap-southeast-2
   app: multi-docker
